@@ -28,9 +28,16 @@ export default function Home() {
 
   function calcularOrcamento() {
     // BLOCO 1
-    const valorBase = valoresRegime[regime];
-    const multRegime = agravanteRegime[tipoRegime];
-    const multFaturamento = agravanteFaturamento[faturamento];
+    const valorBase =
+      valoresRegime[regime as keyof typeof valoresRegime];
+
+    const multRegime =
+      agravanteRegime[tipoRegime as keyof typeof agravanteRegime];
+
+    const multFaturamento =
+      agravanteFaturamento[
+        faturamento as keyof typeof agravanteFaturamento
+      ];
 
     const subtotal1Calc =
       valorBase * multRegime * multFaturamento;
@@ -38,15 +45,20 @@ export default function Home() {
     setSubtotal1(subtotal1Calc);
 
     // BLOCO 2
-    const valorFolha = valoresFolha[folha];
+    const valorFolha =
+      valoresFolha[folha as keyof typeof valoresFolha];
 
-    let fiscalKey = regime;
+    let fiscalKey = regime as keyof typeof agravanteFiscal;
+
     if (!(fiscalKey in agravanteFiscal)) {
       fiscalKey = "Simples Nacional";
     }
 
-    const multFiscal = agravanteFiscal[fiscalKey];
-    const multNegocio = agravanteNegocio[negocio];
+    const multFiscal =
+      agravanteFiscal[fiscalKey as keyof typeof agravanteFiscal];
+
+    const multNegocio =
+      agravanteNegocio[negocio as keyof typeof agravanteNegocio];
 
     const subtotal2Calc =
       valorFolha * multFiscal * multNegocio;
@@ -55,9 +67,12 @@ export default function Home() {
 
     // FINAL
     const multAtendimento =
-      agravanteAtendimento[atendimento];
+      agravanteAtendimento[
+        atendimento as keyof typeof agravanteAtendimento
+      ];
 
-    const multGrupo = descontoGrupo[grupo];
+    const multGrupo =
+      descontoGrupo[grupo as keyof typeof descontoGrupo];
 
     const valorFinal =
       (subtotal1Calc + subtotal2Calc) *
@@ -88,7 +103,6 @@ export default function Home() {
 
         <div className="space-y-6">
 
-          {/* REGIME */}
           <select
             className="w-full border p-3 rounded-xl"
             value={regime}
@@ -99,7 +113,6 @@ export default function Home() {
             ))}
           </select>
 
-          {/* TIPO REGIME */}
           <select
             className="w-full border p-3 rounded-xl"
             value={tipoRegime}
@@ -110,7 +123,6 @@ export default function Home() {
             ))}
           </select>
 
-          {/* FATURAMENTO */}
           <select
             className="w-full border p-3 rounded-xl"
             value={faturamento}
@@ -121,7 +133,6 @@ export default function Home() {
             ))}
           </select>
 
-          {/* FOLHA */}
           <select
             className="w-full border p-3 rounded-xl"
             value={folha}
@@ -132,7 +143,6 @@ export default function Home() {
             ))}
           </select>
 
-          {/* NEGÓCIO */}
           <select
             className="w-full border p-3 rounded-xl"
             value={negocio}
@@ -143,7 +153,6 @@ export default function Home() {
             ))}
           </select>
 
-          {/* ATENDIMENTO */}
           <select
             className="w-full border p-3 rounded-xl"
             value={atendimento}
@@ -154,7 +163,6 @@ export default function Home() {
             ))}
           </select>
 
-          {/* GRUPO */}
           <select
             className="w-full border p-3 rounded-xl"
             value={grupo}
@@ -165,18 +173,40 @@ export default function Home() {
             ))}
           </select>
 
-          {/* DETALHAMENTO */}
           <div className="bg-gray-100 p-4 rounded-xl text-sm">
             <p><strong>Detalhamento:</strong></p>
 
-            <p>Subtotal 1: {subtotal1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
-            <p>Subtotal 2: {subtotal2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
+            <p>
+              Subtotal 1:{" "}
+              {subtotal1.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </p>
 
-            <p>Atendimento: x{agravanteAtendimento[atendimento]}</p>
-            <p>Grupo: x{descontoGrupo[grupo]}</p>
+            <p>
+              Subtotal 2:{" "}
+              {subtotal2.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </p>
+
+            <p>
+              Atendimento: x
+              {agravanteAtendimento[
+                atendimento as keyof typeof agravanteAtendimento
+              ]}
+            </p>
+
+            <p>
+              Grupo: x
+              {descontoGrupo[
+                grupo as keyof typeof descontoGrupo
+              ]}
+            </p>
           </div>
 
-          {/* RESULTADO FINAL */}
           {resultado !== null && (
             <div className="bg-green-100 p-6 rounded-xl text-center">
               <p className="text-lg font-medium">
