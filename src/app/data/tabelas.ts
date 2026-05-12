@@ -13,7 +13,7 @@ export const agravanteRegime = {
 };
 
 export const agravanteFaturamento = {
-  "Manutenção": 0.3,
+  "Manutenção": 0.4,
   "Até 120 mil ano": 1,
   "Até 360 mil ano": 1.2,
   "Até 1.2 milhões ano": 1.4,
